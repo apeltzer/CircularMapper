@@ -37,6 +37,7 @@ public class RealignSAMFile {
 
     private LinkedList<SAMRecord> mappedReads;
     private final SamReader inputSam;
+    private SAMFileHeader modSamheader;
     private SAMFileWriter output_realigned;
     private int elongationfactor;
     private int stat_infactor;
@@ -44,6 +45,7 @@ public class RealignSAMFile {
     private int stat_inregulargenome;
     private int stat_overlapping;
     private static boolean filtered = false;
+    private static boolean filter_sequence_ids = false;
     private Set<String> changedSequences;
     private ReadTrimmer rt = new ReadTrimmer();
 
@@ -61,11 +63,11 @@ public class RealignSAMFile {
         SAMSequenceDictionary dict = modifyHeader();
 
         //Set the corrected header in the output file
-        SAMFileHeader modSamheader = inputSam.getFileHeader().clone();
-        modSamheader.setSequenceDictionary(dict);
+        this.modSamheader = inputSam.getFileHeader().clone();
+        this.modSamheader.setSequenceDictionary(dict);
 
         //Write output to realigned_file
-        output_realigned = new SAMFileWriterFactory().makeSAMOrBAMWriter(modSamheader, false, outreal);
+        this.output_realigned = new SAMFileWriterFactory().makeSAMOrBAMWriter(modSamheader, false, outreal);
 
 
     }
@@ -81,8 +83,8 @@ public class RealignSAMFile {
     			rec.setSequenceLength(modLength);
     			newDict.addSequence(rec);
                 //lis.add(rec);
-    		} else if(!filtered){
-                newDict.addSequence(seq);
+    		} else if(!filter_sequence_ids){
+                newDict.addSequence(seq.clone());
                // lis.add(seq);
             } else {
             }
@@ -109,9 +111,8 @@ public class RealignSAMFile {
 
 		RealignSAMFile rs =  addCLIInterface(args);
 		rs.readSAMFile();
+		rs.output_realigned.close();
 		rs.inputSam.close();
-        rs.output_realigned.close();
-
         /**
          * Some statistics output
          */
@@ -152,25 +153,27 @@ public class RealignSAMFile {
             return;
         }
 
-        if(!this.changedSequences.contains(input.getReferenceName())){
-            if(filtered) {
-                return;
-            } else {
-                output_realigned.addAlignment(input);
-            }
-        }
-        // Get the information that needs to be checked on
+        // We always keep un-mapped reads by ensuring they have a reference that is one of changedSequences.
+        // We discard mapped reads if filter_sequence_ids or filter is set and they do not map to a reference
+        // that is one of changedSequences.
+        // If no filter is set and they do not map to a reference that is one of the changedSequences we keep
+        // the reads.
         if(input.getReadUnmappedFlag()){
-            if(filtered){
-                input.setReferenceIndex(0);
+            Iterator<String> changedSequencesIterator = this.changedSequences.iterator ();
+            if ( changedSequencesIterator.hasNext() && !this.changedSequences.contains(input.getReferenceName()) ) {
+               String changedSequenceName = changedSequencesIterator.next ();
+               input.setReferenceName (changedSequenceName);
+               input.setReferenceIndex (this.modSamheader.getSequenceIndex(input.getReferenceName()));
+               input.setAlignmentStart (1);
             }
             output_realigned.addAlignment(input);
             return;
+	} else if( !this.changedSequences.contains(input.getReferenceName()) && (filter_sequence_ids || filtered) ){
+          return;
+        } else if( !this.changedSequences.contains(input.getReferenceName()) ) {
+          output_realigned.addAlignment(input);
+          return;
         }
-
-
-
-
         int startPos = input.getAlignmentStart();
         String seq = input.getReadString();
 
@@ -184,14 +187,10 @@ public class RealignSAMFile {
 
         if(startPos + readLength >= this.elongationfactor && startPos + readLength <= originalReferenceLength) {
             stat_inregulargenome++;
-            if(filtered){
-                input.setReferenceIndex(0);
-            }
+            input.setReferenceIndex (this.modSamheader.getSequenceIndex(input.getReferenceName()));
             output_realigned.addAlignment(input);
-
         } else {
             processReads(input);
-
         }
     }
 
@@ -220,12 +219,7 @@ public class RealignSAMFile {
                         stat_inelongation++;
                         read.setAttribute("XA", ""); //Kill the attribute, the tag should be gone after determining if its a single hit!
                         read.setReadName(read.getReadName()+"C");
-
-                        //reset index
-                        if(filtered){
-                            read.setReferenceIndex(0);
-
-                        }
+                        read.setReferenceIndex (this.modSamheader.getSequenceIndex(read.getReferenceName()));
                         output_realigned.addAlignment(read);
                     }
                 }
@@ -237,10 +231,7 @@ public class RealignSAMFile {
                     } else {
                         //do nothing, its already mapped properly ;-)
                     }
-                    if(filtered){
-                        read.setReferenceIndex(0);
-
-                    }
+                    read.setReferenceIndex (this.modSamheader.getSequenceIndex(read.getReferenceName()));
                     output_realigned.addAlignment(read);
                 }
             }else {
@@ -258,10 +249,7 @@ public class RealignSAMFile {
 
     private void flushMappedReads(LinkedList<SAMRecord> list) {
         for(SAMRecord read : list){
-            if(filtered){
-                read.setReferenceIndex(0);
-
-            }
+            read.setReferenceIndex (this.modSamheader.getSequenceIndex(read.getReferenceName()));
             output_realigned.addAlignment(read);
         }
     }
@@ -353,9 +341,15 @@ public class RealignSAMFile {
         options.addOption(OptionBuilder.withLongOpt("filterCircularReads")
                 .isRequired(false)
                 .withArgName("FILTER")
-                .withDescription("filter the reads matching the circular identifier (yes/no), default no")
+                .withDescription("filter the reads that don't map to a circular identifier (true/false), default false")
                 .hasArg()
                 .create("f"));
+        options.addOption(OptionBuilder.withLongOpt("filterNonCircularSequences")
+                .isRequired(false)
+                .withArgName("FILTERSEQUENCEIDS")
+                .withDescription("filter the sequence identifiers that are not circular identifiers (true/false), default false")
+                .hasArg()
+                .create("x"));
         HelpFormatter helpformatter = new HelpFormatter();
         CommandLineParser parser = new BasicParser();
         try {
@@ -371,6 +365,7 @@ public class RealignSAMFile {
         String tmpElongation = "";
         Integer elongation = 0;
         String filter = "";
+	String filterSequenceIds = "";
         try {
             CommandLine cmd = parser.parse(options, args);
             if (cmd.hasOption('i')) {
@@ -395,6 +390,14 @@ public class RealignSAMFile {
                 } else {
                     filtered = false;
                 }
+            }
+            if (cmd.hasOption('x')) {
+               filterSequenceIds = cmd.getOptionValue ('x');
+               if ( filterSequenceIds.equals("true") || filter.equals("TRUE") || filter.equals("1")) {
+                 filter_sequence_ids = true;
+               } else {
+                 filter_sequence_ids = false;
+               }
             }
         } catch (ParseException e) {
             helpformatter.printHelp(CLASS_NAME, options);
