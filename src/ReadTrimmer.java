@@ -128,7 +128,7 @@ public class ReadTrimmer {
                     pos = pos - tmp_int;
 
 
-                } else if (tmp_int >= trimLength ){
+                } else if (tmp_int > trimLength ){
 
                     new_seq = sequence.substring(pos - trimLength,pos) + new_seq;
                     new_quali = quality.substring(pos - trimLength,pos) + new_quali;

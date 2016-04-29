@@ -185,7 +185,7 @@ public class RealignSAMFile {
         int elongatedReferenceLength = inputSam.getFileHeader().getSequence(input.getReferenceName()).getSequenceLength();
         int originalReferenceLength = elongatedReferenceLength - this.elongationfactor;
 
-        if(startPos + readLength >= this.elongationfactor && startPos + readLength <= originalReferenceLength) {
+        if(startPos + readLength >= this.elongationfactor && startPos + readLength < originalReferenceLength) {
             stat_inregulargenome++;
             input.setReferenceIndex (this.modSamheader.getSequenceIndex(input.getReferenceName()));
             output_realigned.addAlignment(input);
@@ -286,12 +286,12 @@ public class RealignSAMFile {
         int splitDiff = Math.abs(read.getReadLength() - diff);
 
         copyEnd.setReadName(read.getReadName() + "B");
-        rt.trimRead(copyEnd, read.getReadLength() - splitDiff + 1, false);
+        rt.trimRead(copyEnd, read.getReadLength() - splitDiff, false);
 
         if(copyEnd.getCigar().isEmpty() || (copyEnd.getCigarLength() <=1 ) || copyEnd.getReadLength() == 0){
 
         } else {
-            copyEnd.setAlignmentStart(1);
+            copyEnd.setAlignmentStart(0);
             //add the splitted parts
 
             tempSplit.add(copyEnd);
