@@ -52,7 +52,7 @@ public class RealignSAMFile {
 
     public RealignSAMFile(File f, File reference, int elongationfactor, String filter) {
         mappedReads = new LinkedList<SAMRecord>();
-        inputSam = SamReaderFactory.makeDefault().enable(SamReaderFactory.Option.DONT_MEMORY_MAP_INDEX).validationStringency(ValidationStringency.LENIENT).open(f);
+        inputSam = SamReaderFactory.makeDefault().validationStringency(ValidationStringency.LENIENT).open(f);
         this.elongationfactor = elongationfactor;
 
         File outreal = new File(f.getAbsolutePath().substring(0, f.getAbsolutePath().length() - 4) + "_realigned.bam");
