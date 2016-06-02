@@ -159,9 +159,17 @@ public class ReadTrimmer {
                     continue;
                 }
 
-                // String part
-                if( !(new_ziggi.equals("") &&  intSplit[i + 1].equals("D"))) {
-                    new_ziggi += cigSplit[i] + intSplit[i + 1];
+
+                if(fromStart){
+                    // String part
+                    if( !(new_ziggi.equals("") &&  intSplit[i + 1].equals("D"))) {
+                        new_ziggi += Integer.parseInt(cigSplit[i])+1 + intSplit[i + 1];
+                    }
+                } else {
+                    // String part
+                    if( !(new_ziggi.equals("") &&  intSplit[i + 1].equals("D"))) {
+                        new_ziggi += Integer.parseInt(cigSplit[i]) + intSplit[i + 1];
+                    }
                 }
 
             } else {
@@ -169,10 +177,8 @@ public class ReadTrimmer {
             }
         }
 
-        read.setReadString(sequence);
-        read.setBaseQualityString(quality);
         int diff = quality.length() - new_quali.length();
-        if((diff > 0) & (diff < sequence.length() - 1)){ //to get rid of reads with only masked part...
+        if((diff > 0) & (diff < sequence.length() )){ //to get rid of reads with only masked part...
             if(!fromStart){
                 new_ziggi = String.valueOf(diff) + "S" + new_ziggi;
             } else {
