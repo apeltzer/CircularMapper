@@ -220,6 +220,7 @@ public class RealignSAMFile {
                         read.setAttribute("XA", ""); //Kill the attribute, the tag should be gone after determining if its a single hit!
                         read.setReadName(read.getReadName()+"C");
                         read.setReferenceIndex (this.modSamheader.getSequenceIndex(read.getReferenceName()));
+                        read.setMateReferenceIndex(this.modSamheader.getSequenceIndex(read.getReferenceName()));
                         output_realigned.addAlignment(read);
                     }
                 }
