@@ -292,7 +292,8 @@ public class RealignSAMFile {
         if(copyEnd.getCigar().isEmpty() || (copyEnd.getCigarLength() <=1 ) || copyEnd.getReadLength() == 0){
 
         } else {
-            copyEnd.setAlignmentStart(0);
+            //This has to be set to 1, or else picard validateSamFile will complain about wrong start sites.
+            copyEnd.setAlignmentStart(1);
             //add the splitted parts
 
             tempSplit.add(copyEnd);
@@ -420,7 +421,7 @@ public class RealignSAMFile {
                 return Math.abs(index);
             }
         }
-        return 0;
+        return 1;
 
     }
 
