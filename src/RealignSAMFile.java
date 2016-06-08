@@ -287,7 +287,7 @@ public class RealignSAMFile {
         int splitDiff = Math.abs(read.getReadLength() - diff);
 
         copyEnd.setReadName(read.getReadName() + "B");
-        rt.trimRead(copyEnd, read.getReadLength() - splitDiff, false);
+        rt.trimRead(copyEnd, read.getReadLength() - splitDiff +1, false);
 
         if(copyEnd.getCigar().isEmpty() || (copyEnd.getCigarLength() <=1 ) || copyEnd.getReadLength() == 0){
 
