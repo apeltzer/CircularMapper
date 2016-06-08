@@ -163,7 +163,7 @@ public class ReadTrimmer {
                 if(fromStart){
                     // String part
                     if( !(new_ziggi.equals("") &&  intSplit[i + 1].equals("D"))) {
-                        new_ziggi += Integer.parseInt(cigSplit[i])+1 + intSplit[i + 1];
+                        new_ziggi += Integer.parseInt(cigSplit[i]) + intSplit[i + 1];
                     }
                 } else {
                     // String part
