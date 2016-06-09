@@ -280,7 +280,11 @@ public class RealignSAMFile {
         if(startPosition < originalReferenceLength){
             copyBegin.setAlignmentStart(startPosition);
         } else {
-            copyBegin.setAlignmentStart(startPosition-originalReferenceLength);
+            if(startPosition-originalReferenceLength != 0){
+                copyBegin.setAlignmentStart(startPosition-originalReferenceLength);
+            } else {
+
+            }
         }
 
         int splitDiff = Math.abs(read.getReadLength() - diff);

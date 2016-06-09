@@ -43,6 +43,7 @@ public class ReadTrimmer {
 
         if(fromStart){ //Trim Beginning
 
+            trimLength++;
             int pos = 0;
 
             for(int i = 0; i< cigSplit.length; i++) {
@@ -76,7 +77,6 @@ public class ReadTrimmer {
                     pos = pos + tmp_int;
 
                 } else if (tmp_int >= trimLength ){
-
 
                     new_seq += sequence.substring(pos, pos + trimLength);
                     new_quali += quality.substring(pos, pos + trimLength);
