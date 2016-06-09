@@ -207,7 +207,6 @@ public class RealignSAMFile {
 
             if(((startPos > originalReferenceLength) && (read.getReadLength() + startPos <= elongatedReferenceLength)) || startPos + read.getReadLength() <= this.elongationfactor) {
                 stat_infactor++;
-
                 String xa_tag = (String) read.getAttribute("XA");
                 //If this holds true, we only have one duplicate read, which is truly no real duplicate -> just set MAPQ to 37 and get it back into alignment.
                 if (xa_tag != null) {
@@ -220,6 +219,7 @@ public class RealignSAMFile {
                         read.setAttribute("XA", ""); //Kill the attribute, the tag should be gone after determining if its a single hit!
                         read.setReadName(read.getReadName()+"C");
                         read.setReferenceIndex (this.modSamheader.getSequenceIndex(read.getReferenceName()));
+                        read.setMateReferenceIndex(-1);
                         output_realigned.addAlignment(read);
                     }
                 }
