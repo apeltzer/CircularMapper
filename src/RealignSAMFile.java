@@ -59,7 +59,7 @@ public class RealignSAMFile {
         File changedSequences = new File(reference.getAbsoluteFile()+"_"+this.elongationfactor+"_elongated");
         // get the sequences that were elongated
         getChangedSequences(changedSequences);
-        
+
         SAMSequenceDictionary dict = modifyHeader();
 
         //Set the corrected header in the output file
@@ -71,7 +71,7 @@ public class RealignSAMFile {
 
 
     }
-    
+
     private SAMSequenceDictionary modifyHeader(){
     	SAMSequenceDictionary dict = inputSam.getFileHeader().getSequenceDictionary();
         SAMSequenceDictionary newDict = new SAMSequenceDictionary();
@@ -185,7 +185,7 @@ public class RealignSAMFile {
         int elongatedReferenceLength = inputSam.getFileHeader().getSequence(input.getReferenceName()).getSequenceLength();
         int originalReferenceLength = elongatedReferenceLength - this.elongationfactor;
 
-        if(startPos + readLength >= this.elongationfactor && startPos + readLength < originalReferenceLength) {
+        if(startPos + readLength >= this.elongationfactor && startPos + readLength <= originalReferenceLength) {
             stat_inregulargenome++;
             input.setReferenceIndex (this.modSamheader.getSequenceIndex(input.getReferenceName()));
             output_realigned.addAlignment(input);
@@ -199,7 +199,7 @@ public class RealignSAMFile {
 
 
             int startPos = read.getAlignmentStart();
-            
+
             int elongatedReferenceLength = inputSam.getFileHeader().getSequence(read.getReferenceName()).getSequenceLength();
             int originalReferenceLength = elongatedReferenceLength - this.elongationfactor;
 
@@ -259,7 +259,7 @@ public class RealignSAMFile {
         SAMRecord copyEnd = (SAMRecord) read.clone();
 
         int startPosition = read.getAlignmentStart();
-        
+
         int elongatedReferenceLength = inputSam.getFileHeader().getSequence(read.getReferenceName()).getSequenceLength();
         int originalReferenceLength = elongatedReferenceLength - this.elongationfactor;
 
@@ -301,7 +301,7 @@ public class RealignSAMFile {
 
             tempSplit.add(copyEnd);
         }
-        
+
         //add the splitted parts
 
         if(copyBegin.getCigar().isEmpty() || (copyBegin.getCigarLength() <=1 ) || copyBegin.getReadLength() == 0){
