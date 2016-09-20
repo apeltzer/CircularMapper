@@ -1,0 +1,96 @@
+group 'com.uni-tuebingen.de.it.eager.circularmapper'
+version '1.92.17'
+
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.1'
+    }
+}
+
+
+subprojects {
+    repositories {
+        jcenter()
+    }
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'com.jfrog.bintray'
+}
+
+
+
+project(':generator') {
+  group 'com.uni-tuebingen.de.it.eager.circularmapper.generator'
+  version '1.92.17'
+
+
+    sourceSets {
+        main {
+            java {
+                srcDir '$projectDir/generator'
+                include '*'
+            }
+        }
+    }
+
+
+    dependencies {
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile 'com.google.guava:guava:19.0'
+    compile 'com.github.samtools:htsjdk:2.6.1'
+    compile 'org.apache.commons:com.springsource.org.apache.commons.cli:1.2.0'
+    }
+
+    jar {
+        manifest {
+            attributes("Implementation-Title": "CircularGenerator",
+                   "Implementation-Version": version, "main-Class": "CircularGenerator")
+       }
+       doFirst {
+           from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+        }
+    }
+}
+
+task debug << {
+  subprojects.each { println it.sourceSets.main.java.srcDirs }
+}
+
+project(':realign') {
+  group 'com.uni-tuebingen.de.it.eager.circularmapper.realigner'
+  version '1.92.17'
+
+
+    sourceSets {
+        main {
+            java {
+                srcDir 'realigner'
+                include '**'
+            }
+        }
+    }
+
+
+    dependencies {
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+    compile 'com.google.guava:guava:19.0'
+    compile 'com.github.samtools:htsjdk:2.6.1'
+    compile 'org.apache.commons:com.springsource.org.apache.commons.cli:1.2.0'
+    }
+
+    jar {
+        manifest {
+            attributes("Implementation-Title": "RealignSAMFile",
+                   "Implementation-Version": version, "main-Class": "RealignSAMFile")
+       }
+       doFirst {
+           from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
+        }
+    }
+}

@@ -1,0 +1,2 @@
+rootProject.name = 'CircularMapper'
+include 'generator', 'realign'
