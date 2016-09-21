@@ -56,11 +56,42 @@ project(':generator') {
            from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
         }
     }
+
+    publishing {
+        publications {
+            MyPublication(MavenPublication) {
+                from components.java
+                groupId 'com.uni-tuebingen.de.it.eager'
+                artifactId 'CircularGenerator'
+            }
+        }
+    }
+
+
+    bintray {
+        user = bintrayUser
+        key = bintrayKey
+        publications = ['MyPublication']
+        publish = true
+        pkg {
+            repo = 'EAGER'
+            name = 'CircularMapper.Generator'
+            licenses = ['GPL-3.0']
+            vcsUrl = "https://github.com/apeltzer/CircularMapper"
+            version {
+                name = '1.92.17'
+                desc = 'A method to improve mappings on circular genomes, using the BWA mapper'
+                released  = new Date()
+                vcsTag = '1.92.17'
+                attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+            }
+
+        }
+    }
+
 }
 
-task debug << {
-  subprojects.each { println it.sourceSets.main.java.srcDirs }
-}
+
 
 project(':realign') {
   group 'com.uni-tuebingen.de.it.eager.circularmapper.realigner'
@@ -93,4 +124,38 @@ project(':realign') {
            from { configurations.runtime.collect { it.isDirectory() ? it : zipTree(it) } }
         }
     }
+
+    publishing {
+        publications {
+            MyPublication(MavenPublication) {
+                from components.java
+                groupId 'com.uni-tuebingen.de.it.eager'
+                artifactId 'RealignSAMFile'
+            }
+        }
+    }
+
+
+    bintray {
+        user = bintrayUser
+        key = bintrayKey
+        publications = ['MyPublication']
+        publish = true
+        pkg {
+            repo = 'EAGER'
+            name = 'CircularMapper.Realigner'
+            licenses = ['GPL-3.0']
+            vcsUrl = "https://github.com/apeltzer/CircularMapper"
+            version {
+                name = '1.92.17'
+                desc = 'A method to improve mappings on circular genomes, using the BWA mapper'
+                released  = new Date()
+                vcsTag = '1.92.17'
+                attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
+            }
+
+        }
+    }
+
+
 }
