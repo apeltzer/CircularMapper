@@ -1,4 +1,4 @@
-General Usage of DeDup
+General Usage of CircularMapper
 ================================
 
 Prerequisites
