@@ -1,5 +1,5 @@
 group 'com.uni-tuebingen.de.it.eager.circularmapper'
-version '1.92.17'
+version '1.93.3'
 
 
 buildscript {
@@ -27,7 +27,7 @@ subprojects {
 
 project(':generator') {
   group 'com.uni-tuebingen.de.it.eager.circularmapper.generator'
-  version '1.92.17'
+  version '1.93.3'
 
 
     sourceSets {
@@ -79,10 +79,10 @@ project(':generator') {
             licenses = ['GPL-3.0']
             vcsUrl = "https://github.com/apeltzer/CircularMapper"
             version {
-                name = '1.92.17'
+                name = '1.93.3'
                 desc = 'A method to improve mappings on circular genomes, using the BWA mapper'
                 released  = new Date()
-                vcsTag = '1.92.17'
+                vcsTag = '1.93.3'
                 attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
             }
 
@@ -95,7 +95,7 @@ project(':generator') {
 
 project(':realign') {
   group 'com.uni-tuebingen.de.it.eager.circularmapper.realigner'
-  version '1.92.17'
+  version '1.93.3'
 
 
     sourceSets {
@@ -147,10 +147,10 @@ project(':realign') {
             licenses = ['GPL-3.0']
             vcsUrl = "https://github.com/apeltzer/CircularMapper"
             version {
-                name = '1.92.17'
+                name = '1.93.3'
                 desc = 'A method to improve mappings on circular genomes, using the BWA mapper'
                 released  = new Date()
-                vcsTag = '1.92.17'
+                vcsTag = '1.93.3'
                 attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
             }
 

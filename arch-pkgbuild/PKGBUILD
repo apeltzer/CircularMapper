@@ -1,0 +1,33 @@
+# Contributor: Alex Peltzer <alex.peltzer@gmail.com>
+# Maintainer: Alex Peltzer <alex.peltzer@gmail.com>
+
+pkgname=circularmapper
+pkgver=1.93.3
+pkgrel=1
+pkgdesc="A BWA based method for enhanced circular genome mapping."
+realnamecm="CircularGenerator-${pkgver}.jar"
+realnamerea="RealignSAMFile-${pkgver}.jar"
+arch=('any')
+url="http://it.inf.uni-tuebingen.de/?page_id=161"
+license=('custom')
+depends=('java-environment')
+makedepends=('bwa')
+source=("realign-${pkgver}.jar" "generator-${pkgver}.jar" "starterCG.sh" "starterRSF.sh")
+noextract=("$realnamecm" "$realnamerea")
+md5sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
+
+build() {
+	cp $srcdir/realign-${pkgver}.jar $srcdir/$realnamerea
+	cp $srcdir/generator-${pkgver}.jar $srcdir/$realnamecm
+}
+
+package() {
+  cd "$srcdir"
+  install -D -m755 "${srcdir}/$realnamecm" "${pkgdir}/opt/$pkgname/$realnamecm"
+  install -D -m755 "${srcdir}/$realnamerea" "${pkgdir}/opt/$pkgname/$realnamerea"
+  install -D -m755 "${srcdir}/starterCG.sh" "${pkgdir}/opt/$pkgname/starterCG.sh"
+  install -D -m755 "${srcdir}/starterRSF.sh" "${pkgdir}/opt/$pkgname/starterRSF.sh"
+  install -D -m755 "${pkgdir}/opt/$pkgname/starterCG.sh" "${pkgdir}/usr/bin/circulargenerator"
+  install -D -m755 "${pkgdir}/opt/$pkgname/starterRSF.sh" "${pkgdir}/usr/bin/realignsamfile"
+}
+
