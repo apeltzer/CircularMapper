@@ -11,7 +11,6 @@ arch=('any')
 url="http://it.inf.uni-tuebingen.de/?page_id=161"
 license=('custom')
 depends=('java-environment')
-makedepends=('bwa')
 source=("realign-${pkgver}.jar" "generator-${pkgver}.jar" "starterCG.sh" "starterRSF.sh")
 noextract=("$realnamecm" "$realnamerea")
 md5sums=('SKIP' 'SKIP' 'SKIP' 'SKIP')
