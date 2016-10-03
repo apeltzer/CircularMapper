@@ -73,6 +73,7 @@ project(':generator') {
         key = bintrayKey
         publications = ['MyPublication']
         publish = true
+	override = true
         pkg {
             repo = 'EAGER'
             name = 'CircularMapper.Generator'
@@ -141,7 +142,8 @@ project(':realign') {
         key = bintrayKey
         publications = ['MyPublication']
         publish = true
-        pkg {
+        override = true
+	pkg {
             repo = 'EAGER'
             name = 'CircularMapper.Realigner'
             licenses = ['GPL-3.0']
