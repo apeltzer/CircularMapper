@@ -149,10 +149,10 @@ project(':realign') {
             licenses = ['GPL-3.0']
             vcsUrl = "https://github.com/apeltzer/CircularMapper"
             version {
-                name = '1.93.3'
+                name = project.version
                 desc = 'A method to improve mappings on circular genomes, using the BWA mapper'
                 released  = new Date()
-                vcsTag = '1.93.3'
+                vcsTag = project.version
                 attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
             }
 
