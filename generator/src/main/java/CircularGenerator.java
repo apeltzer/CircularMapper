@@ -122,7 +122,7 @@ public class CircularGenerator {
 
     }
     
-    private void extendFastA(File inputFasta){
+    public void extendFastA(File inputFasta){
     	// create the new files
     	String fileExtension = com.google.common.io.Files.getFileExtension(inputFasta.getAbsolutePath());
         String fileName = com.google.common.io.Files.getNameWithoutExtension(inputFasta.getAbsolutePath());
@@ -198,5 +198,7 @@ public class CircularGenerator {
     	outFastA.flush();
 	}
 
-
+	public void setKeys_to_treat_circular(String keys_to_treat_circular) {
+		this.keys_to_treat_circular.add(keys_to_treat_circular);
+	}
 }

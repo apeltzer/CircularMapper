@@ -21,6 +21,8 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'idea'
     apply plugin: 'com.jfrog.bintray'
+    apply plugin: 'jacoco'
+
 }
 
 
@@ -37,6 +39,11 @@ project(':generator') {
                 include '*'
             }
         }
+        test {
+            java {
+                srcDir 'test'
+            }
+        }
     }
 
 
@@ -45,6 +52,8 @@ project(':generator') {
     compile 'com.google.guava:guava:19.0'
     compile 'com.github.samtools:htsjdk:2.6.1'
     compile 'org.apache.commons:com.springsource.org.apache.commons.cli:1.2.0'
+    compile 'junit:junit:4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 
     jar {
@@ -67,6 +76,12 @@ project(':generator') {
         }
     }
 
+    jacocoTestReport {
+        reports {
+            xml.enabled true
+        }
+    }
+
 
     bintray {
         user = bintrayUser
@@ -80,10 +95,10 @@ project(':generator') {
             licenses = ['GPL-3.0']
             vcsUrl = "https://github.com/apeltzer/CircularMapper"
             version {
-                name = '1.93.3'
+                name = project.version
                 desc = 'A method to improve mappings on circular genomes, using the BWA mapper'
                 released  = new Date()
-                vcsTag = '1.93.3'
+                vcsTag = project.version
                 attributes = ['gradle-plugin': 'com.use.less:com.use.less.gradle:gradle-useless-plugin']
             }
 
@@ -106,6 +121,11 @@ project(':realign') {
                 include '**'
             }
         }
+        test {
+            java {
+                srcDir 'test'
+            }
+        }
     }
 
 
@@ -114,6 +134,8 @@ project(':realign') {
     compile 'com.google.guava:guava:19.0'
     compile 'com.github.samtools:htsjdk:2.6.1'
     compile 'org.apache.commons:com.springsource.org.apache.commons.cli:1.2.0'
+    compile 'junit:junit:4.12'
+    testCompile group: 'junit', name: 'junit', version: '4.12'
     }
 
     jar {
@@ -133,6 +155,12 @@ project(':realign') {
                 groupId 'com.uni-tuebingen.de.it.eager'
                 artifactId 'RealignSAMFile'
             }
+        }
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.enabled true
         }
     }
 
