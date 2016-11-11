@@ -179,9 +179,8 @@ public class CircularGenerator {
 		}
     	if(regEx){
     		if(sequence.length() < elongationfactor){
-    			System.out.println(sequence.length());
-                System.err.println("You cannot extend your sequence with a value longer than your actual sequence.");
-                System.exit(1);
+				RuntimeException runtimeException = new RuntimeException("You cannot extend your sequence with a value longer than your actual sequence.");
+				throw runtimeException;
             } else {
 				String extension = sequence.substring(0, this.elongationfactor);
 				sequence.append(extension);

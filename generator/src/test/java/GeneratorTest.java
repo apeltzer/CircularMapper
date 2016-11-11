@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import static junit.framework.TestCase.fail;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -56,6 +57,14 @@ public class GeneratorTest {
         }
     }
 
+
+    public void testSetupWrong() throws IOException {
+        //Set things up
+        CircularGenerator cg = new CircularGenerator(1000000000); //This is much longer than our input sequence and should thus fail!
+        cg.setKeys_to_treat_circular("gi|224581838|ref|NC_01");
+        cg.extendFastA(input);
+    }
+
     /**
      * This method tests whether our output start is equal to our input start sequence, theye should not have been changed at all.
      * @throws IOException
@@ -80,6 +89,23 @@ public class GeneratorTest {
         int output_length = buffer_output.length();
         String last_50_bases_output = buffer_output.substring(output_length-50,output_length);
         assertEquals(first_50_bases_input,last_50_bases_output);
+    }
+
+    @Test (expected = RuntimeException.class)
+    public void generator_too_long_extension(){
+        try {
+            CircularGenerator cg = new CircularGenerator(1000000000); //This is much longer than our input sequence and should thus fail!
+            cg.setKeys_to_treat_circular("gi|224581838|ref|NC_01");
+            cg.extendFastA(input);
+        } catch (RuntimeException re) {
+            String message = "You cannot extend your sequence with a value longer than your actual sequence.";
+            assertEquals(message, re.getMessage());
+            throw re;
+        }
+        fail("Too long sequence and still got extended by longer than actual sequence.");
+
+
+
     }
 
 
