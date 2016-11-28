@@ -3,6 +3,8 @@ A method to improve mappings on circular genomes, using the BWA mapper
 
 [![Build Status](https://lambda.informatik.uni-tuebingen.de/jenkins/buildStatus/icon?job=CircularMapper)](https://lambda.informatik.uni-tuebingen.de/jenkins/view/EAGER/job/CircularMapper/)
 [![codecov](https://codecov.io/gh/apeltzer/CircularMapper/branch/master/graph/badge.svg)](https://codecov.io/gh/apeltzer/CircularMapper)
+[ ![Download Realigner](https://api.bintray.com/packages/apeltzer/EAGER/CircularMapper.Realigner/images/download.svg) ](https://bintray.com/apeltzer/EAGER/CircularMapper.Realigner/_latestVersion)
+[ ![Download Generator](https://api.bintray.com/packages/apeltzer/EAGER/CircularMapper.Generator/images/download.svg) ](https://bintray.com/apeltzer/EAGER/CircularMapper.Generator/_latestVersion)
 
 Author: Alexander Peltzer <alexander.peltzer@uni-tuebingen.de>
 
