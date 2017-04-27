@@ -29,7 +29,7 @@ subprojects {
 
 project(':generator') {
   group 'com.uni-tuebingen.de.it.eager.circularmapper.generator'
-  version '1.93.3'
+  version '1.93.4'
 
 
     sourceSets {
@@ -111,7 +111,7 @@ project(':generator') {
 
 project(':realign') {
   group 'com.uni-tuebingen.de.it.eager.circularmapper.realigner'
-  version '1.93.3'
+  version '1.93.4'
 
 
     sourceSets {
