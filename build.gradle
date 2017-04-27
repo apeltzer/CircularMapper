@@ -1,5 +1,5 @@
 group 'com.uni-tuebingen.de.it.eager.circularmapper'
-version '1.93.3'
+version '1.93.4'
 
 
 buildscript {
