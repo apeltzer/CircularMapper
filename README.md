@@ -21,6 +21,6 @@ git clone https://github.com/apeltzer/CircularMapper
 cd CircularMapper
 gradle build 
 ```
-After that, you should find an executable JAR file in the directories `generator/build/libs` and `realigner/build/libs`. 
+After that, you should find an executable JAR file in the directory `build/libs/`
 
 A use-case to use this outside of the EAGER pipeline itself, is available [here](http://circularmapper.readthedocs.io/en/latest/). 
