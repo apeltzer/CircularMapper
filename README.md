@@ -14,13 +14,13 @@ The releases for this project can be found on [Bintray](https://bintray.com/apel
 
 ## Build the tool manually
 
-We are using Gradle (https://gradle.org/) to build our Java applications, so you'd need to install Gradle (2+) and Java (8+) on your machine to build the executable. Open the ``build.gradle`` file and delete both `bintray { ... }` sections (once for each tool, circulargenerator and realignsamfile) we use for deploying the CI build to Bintray normally. Save the file and next you can run:
+We are using Gradle (https://gradle.org/) to build our Java applications, so you'd need to install Gradle (2+) and Java (8+) on your machine to build the executable. Now run:
 
 ```bash
 git clone https://github.com/apeltzer/CircularMapper
 cd CircularMapper
 gradle build 
 ```
-After that, you should find an executable JAR file in the directory `build/libs/`
+After that, you should find the appropriate JAR files in the subdirectories: `toolname/build/libs/`
 
 A use-case to use this outside of the EAGER pipeline itself, is available [here](http://circularmapper.readthedocs.io/en/latest/). 
