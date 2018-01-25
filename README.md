@@ -1,16 +1,14 @@
 # CircularMapper
 A method to improve mappings on circular genomes, using the BWA mapper.
 
-[![Build Status](https://lambda.informatik.uni-tuebingen.de/jenkins/buildStatus/icon?job=CircularMapper)](https://lambda.informatik.uni-tuebingen.de/jenkins/view/EAGER/job/CircularMapper/)
+[![Build Status](https://travis-ci.org/apeltzer/CircularMapper.svg?branch=master)](https://travis-ci.org/apeltzer/CircularMapper)
 [![codecov](https://codecov.io/gh/apeltzer/CircularMapper/branch/master/graph/badge.svg)](https://codecov.io/gh/apeltzer/CircularMapper)
-[ ![Download Realigner](https://api.bintray.com/packages/apeltzer/EAGER/CircularMapper.Realigner/images/download.svg) ](https://bintray.com/apeltzer/EAGER/CircularMapper.Realigner/_latestVersion)
-[ ![Download Generator](https://api.bintray.com/packages/apeltzer/EAGER/CircularMapper.Generator/images/download.svg) ](https://bintray.com/apeltzer/EAGER/CircularMapper.Generator/_latestVersion)
 
 Author: Alexander Peltzer <alexander.peltzer@uni-tuebingen.de>
 
 ## Releases
 
-The releases for this project can be found on [Bintray](https://bintray.com/apeltzer/EAGER/) or direct download from there [respectively](https://dl.bintray.com/apeltzer/EAGER/com/uni-tuebingen/de/it/eager/).
+The releases for this project can be found under `Releases`.
 
 ## Build the tool manually
 
