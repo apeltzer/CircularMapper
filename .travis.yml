@@ -15,3 +15,6 @@ deploy:
   skip_cleanup: true
   on:
     repo: apeltzer/CircularMapper
+    
+after_success:
+- bash <(curl -s https://codecov.io/bash)
