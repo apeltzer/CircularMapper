@@ -1,0 +1,17 @@
+language: java
+sudo: false
+jdk:
+- oraclejdk8
+script: gradle build
+env:
+- version=0.12.2
+deploy:
+  provider: releases
+  api_key:
+    secure: ukjJG/pyXZJcsuyWIEaS8/6eBz16/S8XnllJGoeA1Gu9seCkFfu82qhLQ2iUbK1FbJJFFYhTnVI3V5DNtjkBulnpbmJGHpVHPT2DZ8kSO/hgAOi3oPzGMLyxpa/beG6thnDqEDjwSD0ni6MPB7NT//gcRWy+J6MsUHqt+FiJPfkKBcQB7p73w7Kxsjh0YpmnkR4u1cUTJWOAPUfl0gCo4Iu/TLRn9qHUJAKR4zqKm7rNcrQBu1Fgo/+UM/bAr73qgePNZTeP9Jhyc0BDyDqvEpuVihLbcDiT1opY3wah23XCNuQ3Xc/818olw769ozFkK8hSMHk9DwLGK+93zV5gkZHqBwW0w8PvBxNcN3/+4PfDZQeRLvjbIC/PAZvlnFHpypbOHj+qivb3thWlierIPfAukE8dfLi6dh/F7/p5M+V16hejlmWshQ/BmSGjgGfW/xrlMcfmUbf+dKIupD75C9wpkgUZIUT/65mrlsxlZ9ZzWcrB+pSq06wl+6CM2J0XAwKSeX79zYQm9Vq3OVj/n5t088fZK1QR4/V7DFXGbMm5JF95obKSchlYhzoe2SI8Q25m+cxhLh8zqzRJsKa2bwyJW4uAfiRS5U44vlZQiRETkG9LMB3Q+tqv/xHb6F8ojC4OwZKvqLvCOMWPmtSrI02+Q2ZYtDr0Ab/wLHewfXE=
+  file: 
+    - generator/build/libs/generator-1.93.4.jar
+    - realign/build/libs/realign-1.93.4.jar
+  skip_cleanup: true
+  on:
+    repo: apeltzer/CircularMapper
