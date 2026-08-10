@@ -111,13 +111,15 @@ public class ReadTrimmer {
 
                 }else if(intSplit[i+1].equals("I")) {
 
-                    new_seq += sequence.substring(pos, pos + tmp_int);
-                    new_quali += quality.substring(pos, pos + tmp_int);
+                    new_seq += sequence.substring(pos - tmp_int, pos);
+                    new_quali += quality.substring(pos - tmp_int, pos);
+                    pos = pos - tmp_int;
 
                     continue;
                 } else if(intSplit[i+1].equals("S")){
-                    new_seq += sequence.substring(pos,pos+tmp_int);
-                    new_quali += quality.substring(pos,pos+tmp_int);
+                    new_seq += sequence.substring(pos - tmp_int, pos);
+                    new_quali += quality.substring(pos - tmp_int, pos);
+                    pos = pos - tmp_int;
                 } else if(tmp_int < trimLength ){
 
                     trimLength = trimLength -  tmp_int;
